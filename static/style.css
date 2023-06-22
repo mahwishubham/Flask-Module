@@ -1,12 +1,12 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #F9F9F9;
-  padding: 20px;
+  padding: 40px;
   color: #333;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -24,17 +24,20 @@ body::before {
   z-index: -1;
 }
 
+
 .post-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px; /* This will make sure your post container does not stretch infinitely on larger screens */
 }
 
 .post {
-  flex: 1;
   background-color: #FFF;
   border: 1px solid #DDD;
   padding: 20px;
-  margin-left: auto;
-  margin-right: auto;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-position: center;
@@ -255,32 +258,35 @@ form {
     margin-bottom: 20px;
 }
 
-label {
-    font-size: 20px;
-    font-weight: 500;
-    margin-bottom: 10px;
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
 }
 
 input[type="text"],
 textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #DDD;
-    border-radius: 8px;
-    margin-bottom: 10px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #DDD;
+  border-radius: 8px;
+  margin: 10px 0;
 }
 
 input[type="submit"],
 button[type="submit"] {
-    padding: 10px 20px;
-    background-color: #3DD1E7;
-    border: none;
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
+  padding: 10px 20px;
+  background-color: #3DD1E7;
+  border: none;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
 }
+
 .update-button {
   align-items: center;
   background-color: #fee6e3;
@@ -336,5 +342,17 @@ button[type="submit"] {
 @media (min-width: 768px) {
   .update-button {
     padding: 0 40px;
+  }
+}
+
+@media (max-width: 992px) {
+  .post-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .post-container {
+    grid-template-columns: 1fr;
   }
 }
