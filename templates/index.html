@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flask Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to My Flask Blog!</h1>
+    <div class="post-container">
+        {% for post in posts %}
+        <div class="post" style="background-image: url('{{ post['cover'] }}');">
+            <h2>{{ post['title'] }}</h2>
+            <p>{{ post['content'] }}</p>
+            <p>Likes: {{ post['likes'] }}</p>
+            <form action="/like/{{ post['id'] }}" method="POST">
+                <button class="like-button" role="button">Like</button>
+            </form>
+            <div class="author-info">
+                <p>Author: {{ post['author'] }}</p>
+                <p>Publication Date: {{ post['publication_date'] }}</p>
+                <a href="{{ url_for('update', post_id=post['id']) }}" class="update-button" role="button">Update</a>
+            </div>
+            <a href="{{ url_for('delete', post_id=post['id']) }}" class="dbtn">
+                <span class="mdi mdi-delete mdi-24px"></span>
+                <span class="mdi mdi-delete-empty mdi-24px"></span>
+                <span>Delete</span>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="{{ url_for('add') }}" class="add-button" role="button">Add Post</a>
+</body>
+</html>

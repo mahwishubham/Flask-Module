@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Blog Post</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Add Blog Post</h1>
+    <form method="POST" action="/add">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+        <br>
+        <label for="content">Content:</label>
+        <textarea id="content" name="content" rows="4" required></textarea>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if search_results %}
+    <h2>Search Results:</h2>
+    {% for result in search_results %}
+    <div class="post">
+        <h3>{{ result['title'] }}</h3>
+        <p>Author: {{ result['author'] }}</p>
+        <p>Publication Date: {{ result['publication_date'] }}</p>
+        <p>Likes: {{ result['likes'] }}</p>
+        <form action="/like/{{ result['id'] }}" method="POST">
+            <button type="submit">Like</button>
+        </form>
+        <a href="{{ url_for('delete', post_id=result['id']) }}" class="delete-button">Delete</a>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <h2>Existing Posts:</h2>
+    {% for post in posts %}
+    <div class="post">
+        <h3>{{ post['title'] }}</h3>
+        <p>{{ post['content'] }}</p>
+        <p>Likes: {{ post['likes'] }}</p>
+        <form action="/like/{{ post['id'] }}" method="POST">
+            <button type="submit">Like</button>
+        </form>
+        <a href="{{ url_for('delete', post_id=post['id']) }}" class="delete-button">Delete</a>
+    </div>
+    {% endfor %}
+</body>
+</html>
