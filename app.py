@@ -1,6 +1,4 @@
-import uuid
-from flask import Flask, render_template, redirect, request, url_for, jsonify
-import requests
+from flask import Flask, render_template, redirect, request, url_for
 import json
 
 app = Flask(__name__)
@@ -146,11 +144,16 @@ def like(post_id):
     with open('data.json', 'r') as file:
         data = json.load(file)
 
+    flag = 0
     # Find the post with the given post_id
     for post in data:
         if post['id'] == post_id:
+            flag = 1
             post['likes'] += 1  # Increment the likes count
             break
+
+    if flag == 0:
+        return render_template('404.html'), 404
 
     # Write the updated data back to data.json
     with open('data.json', 'w') as file:
@@ -170,4 +173,4 @@ def server_error(error):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host='localhost', port=5000)

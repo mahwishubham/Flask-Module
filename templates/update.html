@@ -4,12 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Blog Post</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>Update Blog Post</h1>
+    <div class="post-container">
+        <div class="post">
+            <h2>{{ post['title'] }}</h2>
+            <p>{{ post['content'] }}</p>
+            <p>Likes: {{ post['likes'] }}</p>
+            <form action="/like/{{ post['id'] }}" method="POST">
+                <button class="like-button" role="button">Like</button>
+            </form>
+            <div class="author-info">
+                <p>Author: {{ post['author'] }}</p>
+                <p>Publication Date: {{ post['publication_date'] }}</p>
+            </div>
+        </div>
+    </div>
     <form action="{{ url_for('update', post_id=post['id']) }}" method="POST">
         <input type="text" name="new_value" placeholder="Enter updated value" required>
         <input type="submit" value="Update">
     </form>
+    <a href="{{ url_for('delete', post_id=post['id']) }}" class="dbtn">
+        <span class="mdi mdi-delete mdi-24px"></span>
+        <span class="mdi mdi-delete-empty mdi-24px"></span>
+        <span>Delete</span>
+    </a>
+    <a href="{{ url_for('index') }}" class="back-button" role="button">Go Back</a>
 </body>
 </html>
